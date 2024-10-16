@@ -25,32 +25,33 @@ public class MedicoService {
     public MedicoResponseDTO saveMedico(DadosCadastraisMedico dadosMedico) {
         Medico medico = MedicoMapper.medicoDTOToMedicoEntity(dadosMedico);
         medicoRepository.save(medico);
-       return MedicoMapper.MedicoEntityToMedicoDTO(medico);
+        return MedicoMapper.MedicoEntityToMedicoDTO(medico);
 
     }
 
     public List<MedicoResponseDTO> findAllMedico() {
         List<Medico> medicos = medicoRepository.findAll();
-        List<MedicoResponseDTO> medicoResponseDTOS = new ArrayList<>();
+
 
         if (!medicos.isEmpty()) {
-            medicoResponseDTOS = medicos.stream()
-                    .map(m -> new MedicoResponseDTO(m.getId(),m.getNome(), m.getCrm(),m.getEmail(), m.getEspecialidade()))
+            List<MedicoResponseDTO> medicoResponseDTOS = medicos.stream()
+                    .map(m -> MedicoMapper.MedicoEntityToMedicoDTO(m))
                     .collect(Collectors.toList());
-
+            return medicoResponseDTOS;
         }
 
-        return medicoResponseDTOS;
+        return null;
+
     }
 
-    public MedicoResponseDTO updateSomeDatasFromMedico(Long medicoId,MedicoPutRequestDTO medicoNovosDados){
+    public MedicoResponseDTO updateSomeDatasFromMedico(Long medicoId, MedicoPutRequestDTO medicoNovosDados) {
 
         Optional<Medico> medicoOpt = medicoRepository.findById(medicoId);
 
-        if(medicoOpt.isPresent()){
+        if (medicoOpt.isPresent()) {
             Medico medico = medicoOpt.get();
             Endereco endereco = medico.getEndereco();
-            Endereco novoEndereco = EnderecoMapper.enderecoSetter(endereco,medicoNovosDados.endereco());
+            Endereco novoEndereco = EnderecoMapper.enderecoSetter(endereco, medicoNovosDados.endereco());
 
             medico.setNome(medicoNovosDados.novoNome());
             medico.setTelefone(medicoNovosDados.telefone());
@@ -66,10 +67,42 @@ public class MedicoService {
     public void deleteMedico(Long medicoId) {
         Optional<Medico> medicoOpt = medicoRepository.findById(medicoId);
 
-        if(medicoOpt.isPresent()){
+        if (medicoOpt.isPresent()) {
             Medico medico = medicoOpt.get();
-            medicoRepository.delete(medico);
+            medico.setIsActive(false);
+            medicoRepository.save(medico);
+
         }
 
+    }
+
+    public List<MedicoResponseDTO> findOnlyActivedMedicos() {
+        List<Medico> medicos = medicoRepository.findMedicoByIsActiveTrue();
+
+        if (!medicos.isEmpty()) {
+            List<MedicoResponseDTO> medicosDto = medicos.stream()
+                    .map(m -> MedicoMapper.MedicoEntityToMedicoDTO(m))
+                    .collect(Collectors.toList());
+
+            return medicosDto;
+        }
+
+        return null;
+
+    }
+
+    public List<MedicoResponseDTO> findOnlyDesactivedMedicos() {
+        List<Medico> medicos = medicoRepository.findMedicoByIsActiveFalse();
+
+        if (!medicos.isEmpty()) {
+
+            List<MedicoResponseDTO> medicosDto = medicos.stream()
+                    .map(m -> MedicoMapper.MedicoEntityToMedicoDTO(m))
+                    .collect(Collectors.toList());
+
+            return medicosDto;
+        }
+
+        return null;
     }
 }

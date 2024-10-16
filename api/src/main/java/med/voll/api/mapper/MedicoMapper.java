@@ -24,6 +24,7 @@ public class MedicoMapper {
                 .endereco(enderecoDTOToEnderecoEntity(dadosMedico.endereco()))
                 .especialidade(dadosMedico.especialidade())
                 .telefone(dadosMedico.telefone())
+                .isActive(true)
                 .build();
     }
 
@@ -49,6 +50,7 @@ public class MedicoMapper {
                 .crm(medico.getCrm())
                 .email(medico.getEmail())
                 .especialidade(medico.getEspecialidade())
+                .medicoEstaAtivo(medico.getIsActive())
                 .build();
 
     }

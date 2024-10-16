@@ -44,4 +44,17 @@ public class MedicoController {
     public void deleteMedico(@PathVariable Long id){
         medicoService.deleteMedico(id);
     }
+
+    @GetMapping("/actived-medicos")
+    public List<MedicoResponseDTO> findOnlyActivedMedicos() {
+        return medicoService.findOnlyActivedMedicos();
+    }
+
+
+    @GetMapping("/desabled-medicos")
+    public List<MedicoResponseDTO> findOnlyDesabledMedicos() {
+        return medicoService.findOnlyDesactivedMedicos();
+    }
+
+
 }

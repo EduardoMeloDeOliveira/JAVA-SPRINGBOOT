@@ -3,7 +3,6 @@ package med.voll.api.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import med.voll.api.dto.DadosResidenciais;
 import med.voll.api.enums.Especialidade;
 
 @Entity
@@ -31,5 +30,6 @@ public class Medico {
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
-    private Boolean isActive = true;
+    @Column(name = "isactive")
+    private Boolean isActive;
 }
