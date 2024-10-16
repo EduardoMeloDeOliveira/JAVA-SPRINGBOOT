@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import med.voll.api.dto.DadosCadastraisMedico;
 import med.voll.api.dto.DadosResidenciais;
+import med.voll.api.dto.MedicoResponseDTO;
 import med.voll.api.entity.Endereco;
 import med.voll.api.entity.Medico;
 
@@ -40,6 +41,14 @@ public class MedicoMapper {
                 .build();
     }
 
+public static MedicoResponseDTO MedicoEntityToMedicoDTO(Medico medico){
 
+        return MedicoResponseDTO.builder()
+                .nome(medico.getNome())
+                .crm(medico.getCrm())
+                .especialidade(medico.getEspecialidade())
+                .build();
+
+}
 
 }
