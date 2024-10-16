@@ -15,8 +15,8 @@ import med.voll.api.entity.Medico;
 public class MedicoMapper {
 
 
-    public static Medico medicoDTOToMedicoEntity(DadosCadastraisMedico dadosMedico){
-        return  Medico.builder()
+    public static Medico medicoDTOToMedicoEntity(DadosCadastraisMedico dadosMedico) {
+        return Medico.builder()
                 .id(null)
                 .crm(dadosMedico.crm())
                 .email(dadosMedico.email())
@@ -27,7 +27,7 @@ public class MedicoMapper {
                 .build();
     }
 
-    public static Endereco enderecoDTOToEnderecoEntity(DadosResidenciais dadosResidenciais){
+    public static Endereco enderecoDTOToEnderecoEntity(DadosResidenciais dadosResidenciais) {
 
         return Endereco.builder()
                 .id(null)
@@ -41,14 +41,15 @@ public class MedicoMapper {
                 .build();
     }
 
-public static MedicoResponseDTO MedicoEntityToMedicoDTO(Medico medico){
+    public static MedicoResponseDTO MedicoEntityToMedicoDTO(Medico medico) {
 
         return MedicoResponseDTO.builder()
                 .nome(medico.getNome())
                 .crm(medico.getCrm())
+                .email(medico.getEmail())
                 .especialidade(medico.getEspecialidade())
                 .build();
 
-}
+    }
 
 }

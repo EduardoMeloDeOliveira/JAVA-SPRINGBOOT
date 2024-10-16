@@ -8,6 +8,7 @@ public record MedicoResponseDTO(
 
         String nome,
         String crm,
+        String email,
         Especialidade especialidade
         ) {
 }

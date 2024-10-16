@@ -2,14 +2,18 @@ package med.voll.api.service;
 
 import lombok.AllArgsConstructor;
 import med.voll.api.dto.DadosCadastraisMedico;
+import med.voll.api.dto.MedicoPutRequestDTO;
 import med.voll.api.dto.MedicoResponseDTO;
+import med.voll.api.entity.Endereco;
 import med.voll.api.entity.Medico;
+import med.voll.api.mapper.EnderecoMapper;
 import med.voll.api.mapper.MedicoMapper;
 import med.voll.api.repository.MedicoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +24,7 @@ public class MedicoService {
 
     public MedicoResponseDTO saveMedico(DadosCadastraisMedico dadosMedico) {
         Medico medico = MedicoMapper.medicoDTOToMedicoEntity(dadosMedico);
+        medicoRepository.save(medico);
        return MedicoMapper.MedicoEntityToMedicoDTO(medico);
 
     }
@@ -30,11 +35,30 @@ public class MedicoService {
 
         if (!medicos.isEmpty()) {
             medicoResponseDTOS = medicos.stream()
-                    .map(m -> new MedicoResponseDTO(m.getNome(), m.getCrm(), m.getEspecialidade()))
+                    .map(m -> new MedicoResponseDTO(m.getNome(), m.getCrm(),m.getEmail(), m.getEspecialidade()))
                     .collect(Collectors.toList());
 
         }
 
         return medicoResponseDTOS;
+    }
+
+    public MedicoResponseDTO updateSomeDatasFromMedico(Long medicoId,MedicoPutRequestDTO medicoNovosDados){
+
+        Optional<Medico> medicoOpt = medicoRepository.findById(medicoId);
+
+        if(medicoOpt.isPresent()){
+            Medico medico = medicoOpt.get();
+            Endereco endereco = medico.getEndereco();
+            Endereco novoEndereco = EnderecoMapper.enderecoSetter(endereco,medicoNovosDados.endereco());
+
+            medico.setNome(medicoNovosDados.novoNome());
+            medico.setTelefone(medicoNovosDados.telefone());
+            medico.setEndereco(novoEndereco);
+            medicoRepository.save(medico);
+            return MedicoMapper.MedicoEntityToMedicoDTO(medico);
+        }
+
+        return null;
     }
 }
