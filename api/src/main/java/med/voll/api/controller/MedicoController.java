@@ -38,4 +38,10 @@ public class MedicoController {
     public MedicoResponseDTO updateMedico(@PathVariable Long id, @Valid @RequestBody MedicoPutRequestDTO medicoNovosDados){
         return medicoService.updateSomeDatasFromMedico(id,medicoNovosDados);
     }
+
+
+    @DeleteMapping("/{id}")
+    public void deleteMedico(@PathVariable Long id){
+        medicoService.deleteMedico(id);
+    }
 }

@@ -44,6 +44,7 @@ public class MedicoMapper {
     public static MedicoResponseDTO MedicoEntityToMedicoDTO(Medico medico) {
 
         return MedicoResponseDTO.builder()
+                .medicoId(medico.getId())
                 .nome(medico.getNome())
                 .crm(medico.getCrm())
                 .email(medico.getEmail())

@@ -35,7 +35,7 @@ public class MedicoService {
 
         if (!medicos.isEmpty()) {
             medicoResponseDTOS = medicos.stream()
-                    .map(m -> new MedicoResponseDTO(m.getNome(), m.getCrm(),m.getEmail(), m.getEspecialidade()))
+                    .map(m -> new MedicoResponseDTO(m.getId(),m.getNome(), m.getCrm(),m.getEmail(), m.getEspecialidade()))
                     .collect(Collectors.toList());
 
         }
@@ -60,5 +60,16 @@ public class MedicoService {
         }
 
         return null;
+    }
+
+
+    public void deleteMedico(Long medicoId) {
+        Optional<Medico> medicoOpt = medicoRepository.findById(medicoId);
+
+        if(medicoOpt.isPresent()){
+            Medico medico = medicoOpt.get();
+            medicoRepository.delete(medico);
+        }
+
     }
 }
