@@ -12,11 +12,12 @@ import med.voll.api.enums.Especialidade;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class Medico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String nome;
     private String email;
