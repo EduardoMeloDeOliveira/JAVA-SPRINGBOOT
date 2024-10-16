@@ -1,7 +1,7 @@
-package med.voll.api.dto;
+package med.voll.api.medico.DTO;
 
 import lombok.Builder;
-import med.voll.api.enums.Especialidade;
+import med.voll.api.medico.enums.Especialidade;
 
 @Builder
 public record MedicoResponseDTO(

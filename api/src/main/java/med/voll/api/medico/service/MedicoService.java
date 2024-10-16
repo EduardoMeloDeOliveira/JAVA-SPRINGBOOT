@@ -1,17 +1,16 @@
-package med.voll.api.service;
+package med.voll.api.medico.service;
 
 import lombok.AllArgsConstructor;
-import med.voll.api.dto.DadosCadastraisMedico;
-import med.voll.api.dto.MedicoPutRequestDTO;
-import med.voll.api.dto.MedicoResponseDTO;
-import med.voll.api.entity.Endereco;
-import med.voll.api.entity.Medico;
-import med.voll.api.mapper.EnderecoMapper;
-import med.voll.api.mapper.MedicoMapper;
-import med.voll.api.repository.MedicoRepository;
+import med.voll.api.medico.DTO.DadosCadastraisMedico;
+import med.voll.api.medico.DTO.MedicoPutRequestDTO;
+import med.voll.api.medico.DTO.MedicoResponseDTO;
+import med.voll.api.endereco.entity.Endereco;
+import med.voll.api.medico.entity.Medico;
+import med.voll.api.endereco.mapper.EnderecoMapper;
+import med.voll.api.medico.mapper.MedicoMapper;
+import med.voll.api.medico.repository.MedicoRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

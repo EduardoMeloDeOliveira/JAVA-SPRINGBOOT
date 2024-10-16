@@ -1,35 +1,30 @@
-package med.voll.api.entity;
+package med.voll.api.paciente.entity;
 
 
 import jakarta.persistence.*;
 import lombok.*;
-import med.voll.api.enums.Especialidade;
+import med.voll.api.endereco.entity.Endereco;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@NoArgsConstructor
 @Builder
-public class Medico {
-
+public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
     private String email;
-    private String crm;
     private String telefone;
 
-    @Enumerated(EnumType.STRING)
-    private Especialidade especialidade;
+    private Boolean isActivePaciente;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
-    @Column(name = "isactive")
-    private Boolean isActive;
+
 }

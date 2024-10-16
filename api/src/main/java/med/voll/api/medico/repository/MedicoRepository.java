@@ -1,7 +1,6 @@
-package med.voll.api.repository;
+package med.voll.api.medico.repository;
 
-import med.voll.api.dto.MedicoResponseDTO;
-import med.voll.api.entity.Medico;
+import med.voll.api.medico.entity.Medico;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

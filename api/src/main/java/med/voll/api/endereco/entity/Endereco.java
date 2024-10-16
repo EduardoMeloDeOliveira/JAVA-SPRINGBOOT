@@ -1,7 +1,9 @@
-package med.voll.api.entity;
+package med.voll.api.endereco.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import med.voll.api.paciente.entity.Paciente;
+import med.voll.api.medico.entity.Medico;
 
 @Entity
 @Getter
@@ -25,4 +27,7 @@ public class Endereco {
 
     @OneToOne(mappedBy = "endereco")
     private Medico medico;
+
+    @OneToOne(mappedBy = "endereco")
+    private Paciente paciente;
 }
