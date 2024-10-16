@@ -30,4 +30,6 @@ public class Medico {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
+
+    private Boolean isActive = true;
 }
