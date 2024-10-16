@@ -1,0 +1,1 @@
+alter table medico add column telefone char(11);

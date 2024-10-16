@@ -7,6 +7,8 @@ import med.voll.api.mapper.MedicoMapper;
 import med.voll.api.repository.MedicoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class MedicoService {
@@ -16,5 +18,9 @@ public class MedicoService {
     public Medico saveMedico(DadosCadastraisMedico dadosMedico){
         Medico medico = MedicoMapper.medicoDTOToMedicoEntity(dadosMedico);
         return medicoRepository.save(medico);
+    }
+
+    public List<Medico> findAllMedico(){
+        return medicoRepository.findAll();
     }
 }

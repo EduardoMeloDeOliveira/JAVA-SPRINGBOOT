@@ -22,6 +22,7 @@ public class MedicoMapper {
                 .nome(dadosMedico.nome())
                 .endereco(enderecoDTOToEnderecoEntity(dadosMedico.endereco()))
                 .especialidade(dadosMedico.especialidade())
+                .telefone(dadosMedico.telefone())
                 .build();
     }
 
@@ -38,5 +39,7 @@ public class MedicoMapper {
                 .cidade(dadosResidenciais.cidade())
                 .build();
     }
+
+
 
 }

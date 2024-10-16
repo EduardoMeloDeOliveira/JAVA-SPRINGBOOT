@@ -1,12 +1,32 @@
 package med.voll.api.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import lombok.Builder;
 import med.voll.api.enums.Especialidade;
-
+@Builder
 public record DadosCadastraisMedico(
+        @NotBlank
         String nome,
+
+        @NotBlank
+        @Email
         String email,
+
+        @NotBlank
+        @Size(min = 11, max = 11)
+        @Digits(integer = 11, fraction = 0)
+        String telefone,
+
+        @NotBlank
+        @Size(min = 4, max = 6)
+        @Digits(integer = 6, fraction = 0)
         String crm,
+
+        @NotNull
         Especialidade especialidade,
-        DadosResidenciais endereco)
-{
+
+        @NotNull
+        @Valid
+        DadosResidenciais endereco) {
 }
