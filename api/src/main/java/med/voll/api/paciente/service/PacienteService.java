@@ -7,6 +7,7 @@ import med.voll.api.paciente.DTO.DadosCadastraisPacientes;
 import med.voll.api.paciente.DTO.PacientePutRequestDTO;
 import med.voll.api.paciente.DTO.PacienteResponseDTO;
 import med.voll.api.paciente.entity.Paciente;
+import med.voll.api.paciente.exception.PacienteNotFoundException;
 import med.voll.api.paciente.mapper.PacienteMapper;
 import med.voll.api.paciente.repository.PacienteRepository;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,7 @@ public class PacienteService {
             return PacienteMapper.pacienteEntityToPacienteResponseDTO(paciente);
         }
 
-        return null;
+        throw new PacienteNotFoundException("Paciente com id %d não econtrado".formatted(id));
 
 
     }
@@ -100,14 +101,19 @@ public class PacienteService {
 
     }
 
-    public void deletePaciente(Long id) {
+    public PacienteResponseDTO deletePaciente(Long id) {
         Optional<Paciente> pacienteOpt = pacienteRepository.findById(id);
 
         if (pacienteOpt.isPresent()) {
             Paciente paciente = pacienteOpt.get();
             paciente.setIsActivePaciente(false);
             pacienteRepository.save(paciente);
+            return PacienteMapper.pacienteEntityToPacienteResponseDTO(paciente);
         }
+
+
+        throw new PacienteNotFoundException("Paciente com id %d não econtrado".formatted(id));
+
     }
 
 }

@@ -6,6 +6,7 @@ import med.voll.api.paciente.DTO.DadosCadastraisPacientes;
 import med.voll.api.paciente.DTO.PacientePutRequestDTO;
 import med.voll.api.paciente.DTO.PacienteResponseDTO;
 import med.voll.api.paciente.service.PacienteService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,33 +19,70 @@ public class PacienteController {
     private final PacienteService pacienteService;
 
     @PostMapping
-    public PacienteResponseDTO savePaciente(@RequestBody @Valid DadosCadastraisPacientes dadosCadastraisPacientes) {
-        return pacienteService.savePaciente(dadosCadastraisPacientes);
+    public ResponseEntity<PacienteResponseDTO> savePaciente(@RequestBody @Valid DadosCadastraisPacientes dadosCadastraisPacientes) {
+
+        PacienteResponseDTO pacienteResponseDTO = pacienteService.savePaciente(dadosCadastraisPacientes);
+        return ResponseEntity.ok(pacienteResponseDTO);
     }
 
     @PutMapping("/{id}")
-    public PacienteResponseDTO updatePaciente(@PathVariable Long id, @RequestBody @Valid PacientePutRequestDTO pacienteData) {
-        return pacienteService.updatePaciente(id, pacienteData);
+    public ResponseEntity<PacienteResponseDTO> updatePaciente(@PathVariable Long id, @RequestBody @Valid PacientePutRequestDTO pacienteData) {
+
+        PacienteResponseDTO pacienteResponseDTO = pacienteService.updatePaciente(id, pacienteData);
+
+        if (pacienteResponseDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(pacienteResponseDTO);
     }
 
     @GetMapping
-    public List<PacienteResponseDTO> getAllPacientes() {
-        return pacienteService.getAllPacientes();
+    public ResponseEntity<List<PacienteResponseDTO>> getAllPacientes() {
+
+        List<PacienteResponseDTO> pacienteResponseDTOS = pacienteService.getAllPacientes();
+
+        if (pacienteResponseDTOS.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(pacienteResponseDTOS);
     }
 
     @GetMapping("/actived-pacientes")
-    public List<PacienteResponseDTO> getActivePacientes() {
-        return pacienteService.getActivePacientes();
+    public ResponseEntity<List<PacienteResponseDTO>> getActivePacientes() {
+
+        List<PacienteResponseDTO> pacienteResponseDTOS = pacienteService.getActivePacientes();
+
+        if (pacienteResponseDTOS.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(pacienteResponseDTOS);
     }
 
     @GetMapping("/disabled-pacientes")
-    public List<PacienteResponseDTO> getDisabledPacientes() {
-        return pacienteService.getDesabledPacientes();
+    public ResponseEntity<List<PacienteResponseDTO>> getDisabledPacientes() {
+
+        List<PacienteResponseDTO> pacienteResponseDTOS = pacienteService.getDesabledPacientes();
+
+        if (pacienteResponseDTOS.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(pacienteResponseDTOS);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePaciente(@PathVariable Long id) {
-        pacienteService.deletePaciente(id);
+    public ResponseEntity<Void> deletePaciente(@PathVariable Long id) {
+
+       PacienteResponseDTO pacienteResponseDTO = pacienteService.deletePaciente(id);
+
+       if (pacienteResponseDTO == null) {
+           return ResponseEntity.notFound().build();
+       }
+
+       return ResponseEntity.noContent().build();
     }
 
 }
