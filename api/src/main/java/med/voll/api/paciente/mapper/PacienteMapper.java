@@ -26,6 +26,7 @@ public class PacienteMapper {
                .idPaciente(paciente.getId())
                .nome(paciente.getNome())
                .telefone(paciente.getTelefone())
+               .isActivedPaciente(paciente.getIsActivePaciente())
                .endereco(EnderecoMapper.enderecoEntityToEnderecoResponseDTO(paciente.getEndereco()))
                .build();
 

@@ -8,6 +8,7 @@ public record PacienteResponseDTO(
         Long idPaciente,
         String nome,
         String telefone,
+        Boolean isActivedPaciente,
         EnderecoResponseDTO endereco
 
 ) {
