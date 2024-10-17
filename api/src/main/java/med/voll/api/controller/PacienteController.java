@@ -2,10 +2,10 @@ package med.voll.api.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import med.voll.api.paciente.DTO.DadosCadastraisPacientes;
-import med.voll.api.paciente.DTO.PacientePutRequestDTO;
-import med.voll.api.paciente.DTO.PacienteResponseDTO;
-import med.voll.api.paciente.service.PacienteService;
+import med.voll.api.domain.paciente.DTO.DadosCadastraisPacientes;
+import med.voll.api.domain.paciente.DTO.PacientePutRequestDTO;
+import med.voll.api.domain.paciente.DTO.PacienteResponseDTO;
+import med.voll.api.domain.paciente.service.PacienteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
