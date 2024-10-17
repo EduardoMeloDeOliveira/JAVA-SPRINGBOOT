@@ -23,7 +23,7 @@ public class MedicoController {
     public ResponseEntity<MedicoResponseDTO> cadastrar(@Valid @RequestBody DadosCadastraisMedico dadosCadastraisMedico) {
 
         MedicoResponseDTO medico = medicoService.saveMedico(dadosCadastraisMedico);
-        return ResponseEntity.ok().body(medico);
+        return ResponseEntity.created(null).body(medico);
     }
 
 

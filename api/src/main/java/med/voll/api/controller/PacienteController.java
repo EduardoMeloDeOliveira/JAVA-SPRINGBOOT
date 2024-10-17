@@ -22,7 +22,7 @@ public class PacienteController {
     public ResponseEntity<PacienteResponseDTO> savePaciente(@RequestBody @Valid DadosCadastraisPacientes dadosCadastraisPacientes) {
 
         PacienteResponseDTO pacienteResponseDTO = pacienteService.savePaciente(dadosCadastraisPacientes);
-        return ResponseEntity.ok(pacienteResponseDTO);
+        return ResponseEntity.created(null).body(pacienteResponseDTO);
     }
 
     @PutMapping("/{id}")
