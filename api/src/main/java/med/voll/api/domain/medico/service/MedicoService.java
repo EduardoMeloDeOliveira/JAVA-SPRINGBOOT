@@ -1,14 +1,14 @@
 package med.voll.api.domain.medico.service;
 
 import lombok.AllArgsConstructor;
+import med.voll.api.domain.endereco.entity.Endereco;
+import med.voll.api.domain.endereco.mapper.EnderecoMapper;
 import med.voll.api.domain.exception.DuplicateKeyViolation;
+import med.voll.api.domain.exception.ObjectNotFoundException;
 import med.voll.api.domain.medico.DTO.DadosCadastraisMedico;
 import med.voll.api.domain.medico.DTO.MedicoPutRequestDTO;
 import med.voll.api.domain.medico.DTO.MedicoResponseDTO;
-import med.voll.api.domain.endereco.entity.Endereco;
 import med.voll.api.domain.medico.entity.Medico;
-import med.voll.api.domain.endereco.mapper.EnderecoMapper;
-import med.voll.api.domain.medico.exception.MedicoNotFoundExecption;
 import med.voll.api.domain.medico.mapper.MedicoMapper;
 import med.voll.api.domain.medico.repository.MedicoRepository;
 import org.springframework.stereotype.Service;
@@ -70,7 +70,7 @@ public class MedicoService {
             return MedicoMapper.MedicoEntityToMedicoDTO(medico);
         }
 
-        throw new MedicoNotFoundExecption("médico com o id: %d não encontrado".formatted(medicoId));
+        throw new ObjectNotFoundException("médico com o id: %d não encontrado".formatted(medicoId));
     }
 
 
@@ -85,7 +85,7 @@ public class MedicoService {
 
         }
 
-        throw new MedicoNotFoundExecption("médico com o id: %d não encontrado".formatted(medicoId));
+        throw new ObjectNotFoundException("médico com o id: %d não encontrado".formatted(medicoId));
 
     }
 

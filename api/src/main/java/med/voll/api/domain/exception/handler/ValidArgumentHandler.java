@@ -27,12 +27,6 @@ public class ValidArgumentHandler {
         );
     }
 
-    @ExceptionHandler(DuplicateKeyViolation.class)
-    public ResponseEntity<String> handlerDuplicateKeyException(DuplicateKeyViolation ex) {
-
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
-
-    }
 
     private record ErrorFieldsDTO(String field, String message) {
 

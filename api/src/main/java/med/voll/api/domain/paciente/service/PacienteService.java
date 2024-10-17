@@ -4,11 +4,11 @@ import lombok.RequiredArgsConstructor;
 import med.voll.api.domain.endereco.entity.Endereco;
 import med.voll.api.domain.endereco.mapper.EnderecoMapper;
 import med.voll.api.domain.exception.DuplicateKeyViolation;
+import med.voll.api.domain.exception.ObjectNotFoundException;
 import med.voll.api.domain.paciente.DTO.DadosCadastraisPacientes;
 import med.voll.api.domain.paciente.DTO.PacientePutRequestDTO;
 import med.voll.api.domain.paciente.DTO.PacienteResponseDTO;
 import med.voll.api.domain.paciente.entity.Paciente;
-import med.voll.api.domain.paciente.exception.PacienteNotFoundException;
 import med.voll.api.domain.paciente.mapper.PacienteMapper;
 import med.voll.api.domain.paciente.repository.PacienteRepository;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class PacienteService {
 
         Paciente paciente = PacienteMapper.pacienteDTOToPacienteEntity(dadosCadastraisPacientes);
 
-        if(pacienteRepository.existsPacienteByEmail(paciente.getEmail())){
+        if (pacienteRepository.existsPacienteByEmail(paciente.getEmail())) {
             throw new DuplicateKeyViolation("Email ja cadastrado");
         }
 
@@ -56,7 +56,7 @@ public class PacienteService {
             return PacienteMapper.pacienteEntityToPacienteResponseDTO(paciente);
         }
 
-        throw new PacienteNotFoundException("Paciente com id %d não econtrado".formatted(id));
+        throw new ObjectNotFoundException("Paciente com id %d não econtrado".formatted(id));
 
 
     }
@@ -118,7 +118,7 @@ public class PacienteService {
         }
 
 
-        throw new PacienteNotFoundException("Paciente com id %d não econtrado".formatted(id));
+        throw new ObjectNotFoundException("Paciente com id %d não econtrado".formatted(id));
 
     }
 
