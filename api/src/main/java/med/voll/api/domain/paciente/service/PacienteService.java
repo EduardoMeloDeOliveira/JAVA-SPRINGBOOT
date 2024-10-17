@@ -3,6 +3,7 @@ package med.voll.api.domain.paciente.service;
 import lombok.RequiredArgsConstructor;
 import med.voll.api.domain.endereco.entity.Endereco;
 import med.voll.api.domain.endereco.mapper.EnderecoMapper;
+import med.voll.api.domain.exception.DuplicateKeyViolation;
 import med.voll.api.domain.paciente.DTO.DadosCadastraisPacientes;
 import med.voll.api.domain.paciente.DTO.PacientePutRequestDTO;
 import med.voll.api.domain.paciente.DTO.PacienteResponseDTO;
@@ -27,6 +28,11 @@ public class PacienteService {
     public PacienteResponseDTO savePaciente(DadosCadastraisPacientes dadosCadastraisPacientes) {
 
         Paciente paciente = PacienteMapper.pacienteDTOToPacienteEntity(dadosCadastraisPacientes);
+
+        if(pacienteRepository.existsPacienteByEmail(paciente.getEmail())){
+            throw new DuplicateKeyViolation("Email ja cadastrado");
+        }
+
 
         pacienteRepository.save(paciente);
 

@@ -9,4 +9,5 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
 
     List<Paciente> findPacienteByIsActivePacienteTrue();
     List<Paciente> findPacienteByIsActivePacienteFalse();
+    Boolean existsPacienteByEmail(String email);
 }

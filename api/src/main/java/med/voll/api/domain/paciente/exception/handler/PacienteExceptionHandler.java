@@ -21,23 +21,4 @@ public class PacienteExceptionHandler {
     }
 
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<ErrorFields>> handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        List<FieldError> fieldErrors = ex.getFieldErrors();
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                fieldErrors.stream()
-                        .map(ErrorFields::new)
-                        .collect(Collectors.toList())
-        );
-
-    }
-
-
-    private record ErrorFields(String field, String message) {
-
-        public ErrorFields(FieldError fieldErrors) {
-            this(fieldErrors.getField(), fieldErrors.getDefaultMessage());
-        }
-    }
 }

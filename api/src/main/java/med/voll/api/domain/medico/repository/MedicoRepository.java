@@ -10,4 +10,6 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
 
   List<Medico>findMedicoByIsActiveTrue();
   List<Medico> findMedicoByIsActiveFalse();
+  Boolean existsMedicoByCrm(String crm);
+  Boolean existsMedicoByEmail(String email);
 }

@@ -19,22 +19,4 @@ public class MedicoExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<ErrorFieldsDTO>> handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-
-        List<FieldError> fieldError = ex.getFieldErrors();
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                fieldError.stream()
-                        .map(ErrorFieldsDTO::new)
-                        .collect(Collectors.toList())
-        );
-    }
-
-    private record ErrorFieldsDTO(String field, String message) {
-
-        public ErrorFieldsDTO(FieldError fieldError) {
-            this(fieldError.getField(), fieldError.getDefaultMessage());
-        }
-    }
 }

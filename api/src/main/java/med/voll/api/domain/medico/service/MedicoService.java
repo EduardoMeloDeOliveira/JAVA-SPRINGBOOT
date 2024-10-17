@@ -1,6 +1,7 @@
 package med.voll.api.domain.medico.service;
 
 import lombok.AllArgsConstructor;
+import med.voll.api.domain.exception.DuplicateKeyViolation;
 import med.voll.api.domain.medico.DTO.DadosCadastraisMedico;
 import med.voll.api.domain.medico.DTO.MedicoPutRequestDTO;
 import med.voll.api.domain.medico.DTO.MedicoResponseDTO;
@@ -24,6 +25,15 @@ public class MedicoService {
 
     public MedicoResponseDTO saveMedico(DadosCadastraisMedico dadosMedico) {
         Medico medico = MedicoMapper.medicoDTOToMedicoEntity(dadosMedico);
+
+        if(medicoRepository.existsMedicoByCrm(medico.getCrm())){
+            throw new DuplicateKeyViolation("Crm ja cadastrado");
+        }
+
+        if(medicoRepository.existsMedicoByEmail(medico.getEmail())){
+            throw new DuplicateKeyViolation("Email ja cadastrado");
+        }
+
         medicoRepository.save(medico);
         return MedicoMapper.MedicoEntityToMedicoDTO(medico);
 
