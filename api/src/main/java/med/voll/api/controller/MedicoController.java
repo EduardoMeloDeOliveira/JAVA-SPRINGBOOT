@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import med.voll.api.medico.DTO.DadosCadastraisMedico;
 import med.voll.api.medico.DTO.MedicoPutRequestDTO;
 import med.voll.api.medico.DTO.MedicoResponseDTO;
+import med.voll.api.medico.entity.Medico;
 import med.voll.api.medico.service.MedicoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,37 +20,76 @@ public class MedicoController {
     private final MedicoService medicoService;
 
     @PostMapping
-    public MedicoResponseDTO cadastrar(@Valid @RequestBody DadosCadastraisMedico medico) {
-        return medicoService.saveMedico(medico);
+    public ResponseEntity<MedicoResponseDTO> cadastrar(@Valid @RequestBody DadosCadastraisMedico dadosCadastraisMedico) {
+
+        MedicoResponseDTO medico = medicoService.saveMedico(dadosCadastraisMedico);
+        return ResponseEntity.ok().body(medico);
     }
 
 
     @GetMapping
-    public List<MedicoResponseDTO> getAllMedicos() {
+    public ResponseEntity<List<MedicoResponseDTO>> getAllMedicos() {
 
-        return medicoService.findAllMedico();
+        List<MedicoResponseDTO> medicoResponseDTOS = medicoService.findAllMedico();
+
+        if (medicoResponseDTOS.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().body(medicoResponseDTOS);
+
     }
 
     @PutMapping("/{id}")
-    public MedicoResponseDTO updateMedico(@PathVariable Long id, @Valid @RequestBody MedicoPutRequestDTO medicoNovosDados){
-        return medicoService.updateSomeDatasFromMedico(id,medicoNovosDados);
+    public ResponseEntity<MedicoResponseDTO> updateMedico(@PathVariable Long id, @Valid @RequestBody MedicoPutRequestDTO medicoNovosDados) {
+
+        MedicoResponseDTO medicoResponseDTO = medicoService.updateSomeDatasFromMedico(id, medicoNovosDados);
+
+        if (medicoResponseDTO == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok().body(medicoResponseDTO);
     }
 
 
     @DeleteMapping("/{id}")
-    public void deleteMedico(@PathVariable Long id){
-        medicoService.deleteMedico(id);
+    public ResponseEntity<Void> deleteMedico(@PathVariable Long id) {
+
+        MedicoResponseDTO medicoResponseDTO = medicoService.deleteMedico(id);
+
+        if (medicoResponseDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.noContent().build();
+
     }
 
     @GetMapping("/actived-medicos")
-    public List<MedicoResponseDTO> findOnlyActivedMedicos() {
-        return medicoService.findOnlyActivedMedicos();
+    public ResponseEntity<List<MedicoResponseDTO>> findOnlyActivedMedicos() {
+
+        List<MedicoResponseDTO> medicoResponseDTOS = medicoService.findOnlyActivedMedicos();
+
+        if (medicoResponseDTOS.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok().body(medicoResponseDTOS);
     }
 
 
     @GetMapping("/desabled-medicos")
-    public List<MedicoResponseDTO> findOnlyDesabledMedicos() {
-        return medicoService.findOnlyDesactivedMedicos();
+    public ResponseEntity<List<MedicoResponseDTO>> findOnlyDesabledMedicos() {
+
+        List<MedicoResponseDTO> medicoResponseDTOS = medicoService.findOnlyDesactivedMedicos();
+
+        if (medicoResponseDTOS.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+
+        return ResponseEntity.ok().body(medicoResponseDTOS);
+
     }
 
 

@@ -7,6 +7,7 @@ import med.voll.api.medico.DTO.MedicoResponseDTO;
 import med.voll.api.endereco.entity.Endereco;
 import med.voll.api.medico.entity.Medico;
 import med.voll.api.endereco.mapper.EnderecoMapper;
+import med.voll.api.medico.exception.MedicoNotFoundExecption;
 import med.voll.api.medico.mapper.MedicoMapper;
 import med.voll.api.medico.repository.MedicoRepository;
 import org.springframework.stereotype.Service;
@@ -59,19 +60,22 @@ public class MedicoService {
             return MedicoMapper.MedicoEntityToMedicoDTO(medico);
         }
 
-        return null;
+        throw new MedicoNotFoundExecption("médico com o id: %d não encontrado".formatted(medicoId));
     }
 
 
-    public void deleteMedico(Long medicoId) {
+    public MedicoResponseDTO deleteMedico(Long medicoId) {
         Optional<Medico> medicoOpt = medicoRepository.findById(medicoId);
 
         if (medicoOpt.isPresent()) {
             Medico medico = medicoOpt.get();
             medico.setIsActive(false);
             medicoRepository.save(medico);
+            return MedicoMapper.MedicoEntityToMedicoDTO(medico);
 
         }
+
+        throw new MedicoNotFoundExecption("médico com o id: %d não encontrado".formatted(medicoId));
 
     }
 
@@ -87,7 +91,6 @@ public class MedicoService {
         }
 
         return null;
-
     }
 
     public List<MedicoResponseDTO> findOnlyDesactivedMedicos() {
