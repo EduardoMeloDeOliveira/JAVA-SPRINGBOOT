@@ -1,7 +1,5 @@
-package med.voll.api.domain.exception.handler;
+package med.voll.api.domain.infra.handler;
 
-import med.voll.api.domain.exception.DuplicateKeyViolation;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

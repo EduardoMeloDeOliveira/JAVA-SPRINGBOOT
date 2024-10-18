@@ -1,4 +1,4 @@
-package med.voll.api.domain.exception;
+package med.voll.api.domain.infra.exception;
 
 public class ObjectNotFoundException extends RuntimeException {
 
