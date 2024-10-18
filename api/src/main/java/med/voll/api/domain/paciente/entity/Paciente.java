@@ -3,7 +3,10 @@ package med.voll.api.domain.paciente.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import med.voll.api.domain.consulta.entity.Consulta;
 import med.voll.api.domain.endereco.entity.Endereco;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,4 +30,6 @@ public class Paciente {
     private Endereco endereco;
 
 
+    @OneToMany(mappedBy = "paciente")
+    private List<Consulta> consultas;
 }

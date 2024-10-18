@@ -13,6 +13,7 @@ import med.voll.api.domain.paciente.mapper.PacienteMapper;
 import med.voll.api.domain.paciente.repository.PacienteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,45 +66,50 @@ public class PacienteService {
 
         List<Paciente> pacientes = pacienteRepository.findAll();
 
+        List<PacienteResponseDTO> pacienteResponseDTOS  = new ArrayList<>();
+
         if (!pacientes.isEmpty()) {
-            List<PacienteResponseDTO> pacienteResponseDTOS = pacientes
+            pacienteResponseDTOS = pacientes
                     .stream()
                     .map(paciente -> PacienteMapper.pacienteEntityToPacienteResponseDTO(paciente))
                     .collect(Collectors.toList());
             return pacienteResponseDTOS;
         }
 
-        return null;
+        return pacienteResponseDTOS;
     }
 
     public List<PacienteResponseDTO> getActivePacientes() {
+
         List<Paciente> pacientes = pacienteRepository.findPacienteByIsActivePacienteTrue();
 
+        List<PacienteResponseDTO> pacienteResponseDTOS = new ArrayList<>();
+
         if (!pacientes.isEmpty()) {
-            List<PacienteResponseDTO> pacienteResponseDTOS = pacientes.stream()
+            pacienteResponseDTOS = pacientes.stream()
                     .map(paciente -> PacienteMapper.pacienteEntityToPacienteResponseDTO(paciente))
                     .collect(Collectors.toList());
 
             return pacienteResponseDTOS;
         }
 
-        return null;
+        return pacienteResponseDTOS;
 
 
     }
 
     public List<PacienteResponseDTO> getDesabledPacientes() {
         List<Paciente> pacientes = pacienteRepository.findPacienteByIsActivePacienteFalse();
-
+        List<PacienteResponseDTO> pacienteResponseDTOS = new ArrayList<>();
         if (!pacientes.isEmpty()) {
-            List<PacienteResponseDTO> pacienteResponseDTOS = pacientes.stream()
+            pacienteResponseDTOS = pacientes.stream()
                     .map(paciente -> PacienteMapper.pacienteEntityToPacienteResponseDTO(paciente))
                     .collect(Collectors.toList());
 
             return pacienteResponseDTOS;
         }
 
-        return null;
+        return pacienteResponseDTOS;
 
     }
 

@@ -31,7 +31,7 @@ public class MedicoController {
 
         List<MedicoResponseDTO> medicoResponseDTOS = medicoService.findAllMedico();
 
-        if (medicoResponseDTOS.isEmpty()) {
+        if (medicoResponseDTOS == null || medicoResponseDTOS.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok().body(medicoResponseDTOS);

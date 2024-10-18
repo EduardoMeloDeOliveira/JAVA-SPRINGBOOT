@@ -3,8 +3,11 @@ package med.voll.api.domain.medico.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import med.voll.api.domain.consulta.entity.Consulta;
 import med.voll.api.domain.endereco.entity.Endereco;
 import med.voll.api.domain.medico.enums.Especialidade;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -33,4 +36,7 @@ public class Medico {
 
     @Column(name = "isactive")
     private Boolean isActive;
+
+    @OneToMany(mappedBy = "medico")
+    private List<Consulta> consultas;
 }

@@ -13,6 +13,7 @@ import med.voll.api.domain.medico.mapper.MedicoMapper;
 import med.voll.api.domain.medico.repository.MedicoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,11 +27,11 @@ public class MedicoService {
     public MedicoResponseDTO saveMedico(DadosCadastraisMedico dadosMedico) {
         Medico medico = MedicoMapper.medicoDTOToMedicoEntity(dadosMedico);
 
-        if(medicoRepository.existsMedicoByCrm(medico.getCrm())){
+        if (medicoRepository.existsMedicoByCrm(medico.getCrm())) {
             throw new DuplicateKeyViolation("Crm ja cadastrado");
         }
 
-        if(medicoRepository.existsMedicoByEmail(medico.getEmail())){
+        if (medicoRepository.existsMedicoByEmail(medico.getEmail())) {
             throw new DuplicateKeyViolation("Email ja cadastrado");
         }
 
@@ -41,16 +42,16 @@ public class MedicoService {
 
     public List<MedicoResponseDTO> findAllMedico() {
         List<Medico> medicos = medicoRepository.findAll();
-
+        List<MedicoResponseDTO> medicoResponseDTOS = new ArrayList<>();
 
         if (!medicos.isEmpty()) {
-            List<MedicoResponseDTO> medicoResponseDTOS = medicos.stream()
+            medicoResponseDTOS = medicos.stream()
                     .map(m -> MedicoMapper.MedicoEntityToMedicoDTO(m))
                     .collect(Collectors.toList());
             return medicoResponseDTOS;
         }
 
-        return null;
+        return medicoResponseDTOS;
 
     }
 
@@ -91,30 +92,33 @@ public class MedicoService {
 
     public List<MedicoResponseDTO> findOnlyActivedMedicos() {
         List<Medico> medicos = medicoRepository.findMedicoByIsActiveTrue();
+        List<MedicoResponseDTO> medicosDto = new ArrayList<>();
 
         if (!medicos.isEmpty()) {
-            List<MedicoResponseDTO> medicosDto = medicos.stream()
+            medicosDto = medicos.stream()
                     .map(m -> MedicoMapper.MedicoEntityToMedicoDTO(m))
                     .collect(Collectors.toList());
 
             return medicosDto;
         }
 
-        return null;
+        return medicosDto;
     }
 
     public List<MedicoResponseDTO> findOnlyDesactivedMedicos() {
+
         List<Medico> medicos = medicoRepository.findMedicoByIsActiveFalse();
+        List<MedicoResponseDTO> medicosDto = new ArrayList<>();
 
         if (!medicos.isEmpty()) {
 
-            List<MedicoResponseDTO> medicosDto = medicos.stream()
+             medicosDto = medicos.stream()
                     .map(m -> MedicoMapper.MedicoEntityToMedicoDTO(m))
                     .collect(Collectors.toList());
 
             return medicosDto;
         }
 
-        return null;
+        return medicosDto;
     }
 }
