@@ -2,17 +2,18 @@ package med.voll.api.domain.consulta.DTO;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
 public record ConsultaRequestDTO (
-        @NotBlank
+        @NotNull
         Long medicoId,
 
-        @NotBlank
+        @NotNull
         Long pacienteId,
 
-        @NotBlank
+        @NotNull
         @Future
         LocalDateTime dataConsulta){
 }

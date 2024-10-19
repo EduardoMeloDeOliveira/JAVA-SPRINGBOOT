@@ -3,6 +3,7 @@ package med.voll.api.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import med.voll.api.domain.medico.DTO.DadosCadastraisMedico;
+import med.voll.api.domain.medico.DTO.MedicoDetailsConsultasDTO;
 import med.voll.api.domain.medico.DTO.MedicoPutRequestDTO;
 import med.voll.api.domain.medico.DTO.MedicoResponseDTO;
 import med.voll.api.domain.medico.service.MedicoService;
@@ -91,5 +92,17 @@ public class MedicoController {
 
     }
 
+    @GetMapping("/get-medico-consultas/{id}")
+    public ResponseEntity<MedicoDetailsConsultasDTO> getMedicoConsultas(@PathVariable Long id) {
+
+        MedicoDetailsConsultasDTO medicoDTO = medicoService.getMedicoDetailsById(id);
+
+        if(medicoDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(medicoDTO);
+
+    }
 
 }

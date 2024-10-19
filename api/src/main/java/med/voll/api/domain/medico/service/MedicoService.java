@@ -1,11 +1,14 @@
 package med.voll.api.domain.medico.service;
 
 import lombok.AllArgsConstructor;
+import med.voll.api.domain.consulta.entity.Consulta;
+import med.voll.api.domain.consulta.mapper.ConsultaMapper;
 import med.voll.api.domain.endereco.entity.Endereco;
 import med.voll.api.domain.endereco.mapper.EnderecoMapper;
 import med.voll.api.domain.infra.exception.DuplicateKeyViolation;
 import med.voll.api.domain.infra.exception.ObjectNotFoundException;
 import med.voll.api.domain.medico.DTO.DadosCadastraisMedico;
+import med.voll.api.domain.medico.DTO.MedicoDetailsConsultasDTO;
 import med.voll.api.domain.medico.DTO.MedicoPutRequestDTO;
 import med.voll.api.domain.medico.DTO.MedicoResponseDTO;
 import med.voll.api.domain.medico.entity.Medico;
@@ -112,7 +115,7 @@ public class MedicoService {
 
         if (!medicos.isEmpty()) {
 
-             medicosDto = medicos.stream()
+            medicosDto = medicos.stream()
                     .map(m -> MedicoMapper.MedicoEntityToMedicoDTO(m))
                     .collect(Collectors.toList());
 
@@ -120,5 +123,31 @@ public class MedicoService {
         }
 
         return medicosDto;
+    }
+
+    public MedicoDetailsConsultasDTO getMedicoDetailsById(Long id) {
+        Optional<Medico> medicoOpt = medicoRepository.findById(id);
+
+        if (!medicoOpt.isPresent()) {
+            throw new ObjectNotFoundException("Médico não encontrado");
+        }
+
+        Medico medico = medicoOpt.get();
+        List<Consulta> consultas = medico.getConsultas();
+
+        if (consultas.isEmpty()) {
+            return MedicoDetailsConsultasDTO.builder()
+                    .medicoNome(medico.getNome())
+                    .consultaReponseDTOList(null)
+                    .build();
+        }
+
+        return MedicoDetailsConsultasDTO.builder()
+                .medicoNome(medico.getNome())
+                .consultaReponseDTOList(consultas.stream()
+                        .map(consulta -> ConsultaMapper.entityToDTO(consulta))
+                        .collect(Collectors.toList()))
+                .build();
+
     }
 }

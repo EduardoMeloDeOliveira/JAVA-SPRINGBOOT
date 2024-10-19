@@ -3,10 +3,18 @@ package med.voll.api.domain.medico.mapper;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import med.voll.api.domain.consulta.DTO.ConsultaReponseDTO;
+import med.voll.api.domain.consulta.DTO.ConsultaRequestDTO;
+import med.voll.api.domain.consulta.entity.Consulta;
 import med.voll.api.domain.endereco.mapper.EnderecoMapper;
 import med.voll.api.domain.medico.DTO.DadosCadastraisMedico;
+import med.voll.api.domain.medico.DTO.MedicoDetailsConsultasDTO;
 import med.voll.api.domain.medico.DTO.MedicoResponseDTO;
 import med.voll.api.domain.medico.entity.Medico;
+import med.voll.api.domain.paciente.mapper.PacienteMapper;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -41,5 +49,7 @@ public class MedicoMapper {
                 .build();
 
     }
+
+
 
 }
